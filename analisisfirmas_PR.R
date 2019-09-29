@@ -9,7 +9,7 @@ library(curl)
 library(RCurl)
 library(rio)
 
-leer_firmas <<- function(directory, id, summarize = TRUE) 
+leer_firmas <<- function(id, summarize = TRUE) 
 {
   ## CREAR LISTA DE ARCHIVOS PARA LEER
   ## CREA NOMBRE DE ARCHIVOS CON 5 DIGITOS (0´S A LA IZQUIERDA) SEGUN EL "id"
