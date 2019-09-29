@@ -4,7 +4,6 @@ library(rio)
 library(dygraphs)
 library(rlist)
 
-
 leer_firmas <<- function(id, summarize = TRUE) 
 {
   ## CREAR LISTA DE ARCHIVOS PARA LEER
@@ -13,20 +12,23 @@ leer_firmas <<- function(id, summarize = TRUE)
   ## LEE ARCHIVOS SEGUN EL "id" Y EL DIRECTORIO DONDE SE ENCUENTREN
   datos <<- lapply(paste(filename), read.delim, header=TRUE)
   
-  datos <<- datos$
+  # JUNTAR LOS DATOS SELECCIONADOS EN UNA TABLA
+  datos_tabla <<- list.cbind(datos)
+  longitud <<- datos_tabla$Wavelength
   
-  datos_tabla <- list.cbind(datos)
-  
+  # HACER LISTA DE COLUMNAS DE LOS DATOS
   columna_seleccion <<- paste("ref",sprintf("%05d", id), ".asd", sep="")
+  
+  # SELECCIONAR LAS COLUMNAS CON LOS DATOS PARA NO DUPLICAR LAS LONGITUDES DE ONDA
+  
+  # JUNTAR TABLA DE DATOS CON COLUMNA DE LONGITUDES DE ONDA
+  dt <<- datos_tabla[ , columna_seleccion]
+  dt <<- as.data.frame(cbind(longitud, dt))
 
-  return (datos)
+  return (dt)
 }
 
-dt <- datos_tabla[ , columna_seleccion]
-longitud <- datos$Wavelength
-dt <- cbind(longitud, dt)
-
-
+# GRAFICAR CON DYGRAPH
 p <- dygraph(dt) %>%
   dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = TRUE) %>%
   dyRangeSelector() %>%
