@@ -17,5 +17,5 @@ leer_firmas <<- function(id, summarize = TRUE)
   ## LEE ARCHIVOS SEGUN EL "id" Y EL DIRECTORIO DONDE SE ENCUENTREN
   datos <<- lapply(paste(filename), read.delim, header=TRUE) 
 
-  return (dataselect)
+  return (datos)
 }
