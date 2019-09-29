@@ -8,6 +8,7 @@
 library(curl)
 library(RCurl)
 library(rio)
+library(dygraphs)
 
 leer_firmas <<- function(id, summarize = TRUE) 
 {
@@ -19,3 +20,10 @@ leer_firmas <<- function(id, summarize = TRUE)
 
   return (datos)
 }
+
+p <- dygraph(datos_tabla) %>%
+  dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = FALSE, colors="#D8AE5A") %>%
+  dyRangeSelector() %>%
+  dyCrosshair(direction = "vertical") %>%
+  dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.2, hideOnMouseOut = FALSE)  %>%
+  dyRoller(rollPeriod = 1)
