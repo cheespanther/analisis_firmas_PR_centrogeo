@@ -9,15 +9,13 @@ library(curl)
 library(RCurl)
 library(rio)
 
-
-leer_firmas <<- function(id, summarize = TRUE) 
+leer_firmas <<- function(directory, id, summarize = TRUE) 
 {
   ## CREAR LISTA DE ARCHIVOS PARA LEER
   ## CREA NOMBRE DE ARCHIVOS CON 5 DIGITOS (0´S A LA IZQUIERDA) SEGUN EL "id"
   filename <<- paste("https://raw.githubusercontent.com/cheespanther/analisis_firmas_PR_centrogeo/master/datos/ref",sprintf("%05d", id), ".asd",".txt", sep="")
   ## LEE ARCHIVOS SEGUN EL "id" Y EL DIRECTORIO DONDE SE ENCUENTREN
-  dataread <<- lapply(paste(filename,sep=""), getURL, header=TRUE) 
-  dataselect <<- lapply(paste(dataread,sep=""), read.table, header=TRUE)
-  
+  datos <<- lapply(paste(filename), read.delim, header=TRUE) 
+
   return (dataselect)
 }
